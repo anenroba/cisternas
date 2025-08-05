@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú del Restaurante</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* rounded-3xl */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px; /* Ancho similar a un móvil */
+            overflow: hidden;
+        }
+        .header {
+            background-color: #f8f8f8;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        .category-button {
+            padding: 0.75rem 1.25rem;
+            border-radius: 9999px; /* rounded-full */
+            font-weight: 600;
+            color: #4a5568;
+            background-color: #e2e8f0;
+            transition: all 0.2s ease-in-out;
+            white-space: nowrap; /* Evita que el texto se rompa */
+        }
+        .category-button.active {
+            background-color: #ec4899; /* pink-500 */
+            color: #ffffff;
+        }
+        .product-card {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: #ffffff;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 0.5rem; /* rounded-lg */
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+        .footer {
+            background-color: #f8f8f8;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #eee;
+        }
+        .footer-icon {
+            color: #a0aec0;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Encabezado de la aplicación -->
+        <div class="header">
+            <i class="fas fa-times text-gray-600 text-xl cursor-pointer"></i>
+            <span class="font-semibold text-gray-800">Cisternas 2039 - La Serena</span>
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-user text-gray-600 cursor-pointer"></i>
+                <i class="fas fa-search text-gray-600 cursor-pointer"></i>
+                <i class="fas fa-bell text-gray-600 cursor-pointer"></i>
+            </div>
+        </div>
+
+        <!-- Barra de categorías deslizante -->
+        <div class="flex overflow-x-auto p-4 space-x-3 bg-white border-b border-gray-100 scrollbar-hide">
+            <button class="category-button active" data-category="entradas">Entradas</button>
+            <button class="category-button" data-category="platos-fuertes">Platos Fuertes</button>
+            <button class="category-button" data-category="postres">Postres</button>
+            <button class="category-button" data-category="bebidas">Bebidas</button>
+        </div>
+
+        <!-- Contenido principal de productos -->
+        <div class="p-4">
+            <h2 id="category-title" class="text-2xl font-bold text-gray-800 mb-4">Entradas</h2>
+            <div id="product-list">
+                <!-- Los productos se cargarán aquí dinámicamente -->
+            </div>
+        </div>
+
+        <!-- Pie de página de la aplicación -->
+        <div class="footer">
+            <i class="fas fa-chevron-left footer-icon"></i>
+            <i class="fas fa-chevron-right footer-icon"></i>
+            <i class="fas fa-instagram footer-icon"></i>
+            <i class="fas fa-history footer-icon"></i>
+            <i class="fas fa-sync-alt footer-icon"></i>
+            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center shadow-lg cursor-pointer">
+                <i class="fas fa-user-tie text-white text-xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos de productos organizados por categoría
+        const productsData = {
+            "entradas": [
+                {
+                    name: "Ensalada Fresca",
+                    description: "Mix de lechugas, tomate cherry y aderezo de la casa.",
+                    price: "$5.500",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Ensalada"
+                },
+                {
+                    name: "Sopa del Día",
+                    description: "Sopa cremosa de vegetales de temporada.",
+                    price: "$4.800",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Sopa"
+                },
+                {
+                    name: "Bruschetta de Tomate",
+                    description: "Pan tostado con tomate fresco, albahaca y aceite de oliva.",
+                    price: "$6.200",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Bruschetta"
+                },
+                {
+                    name: "Croquetas de Queso",
+                    description: "Deliciosas croquetas caseras de queso.",
+                    price: "$5.000",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Croquetas"
+                }
+            ],
+            "platos-fuertes": [
+                {
+                    name: "Salmón a la Plancha",
+                    description: "Salmón fresco con vegetales al vapor.",
+                    price: "$15.000",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Salmón"
+                },
+                {
+                    name: "Lomo Saltado",
+                    description: "Clásico peruano con carne, papas y cebolla.",
+                    price: "$12.500",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Lomo"
+                },
+                {
+                    name: "Pasta Carbonara",
+                    description: "Pasta fresca con salsa cremosa, huevo y panceta.",
+                    price: "$10.800",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Pasta"
+                },
+                {
+                    name: "Hamburguesa Clásica",
+                    description: "Carne de res, queso, lechuga, tomate y papas fritas.",
+                    price: "$9.500",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Hamburguesa"
+                }
+            ],
+            "postres": [
+                {
+                    name: "Tiramisú",
+                    description: "Postre italiano con café y mascarpone.",
+                    price: "$6.000",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Tiramisú"
+                },
+                {
+                    name: "Cheesecake de Frutos Rojos",
+                    description: "Tarta de queso con salsa de frutos rojos.",
+                    price: "$5.800",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Cheesecake"
+                },
+                {
+                    name: "Brownie con Helado",
+                    description: "Brownie de chocolate caliente con una bola de helado de vainilla.",
+                    price: "$5.200",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Brownie"
+                },
+                {
+                    name: "Fruta Fresca",
+                    description: "Selección de frutas de temporada.",
+                    price: "$3.500",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Fruta"
+                }
+            ],
+            "bebidas": [
+                {
+                    name: "Agua Mineral",
+                    description: "Agua mineral con o sin gas.",
+                    price: "$2.000",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Agua"
+                },
+                {
+                    name: "Refresco",
+                    description: "Variedad de refrescos (Coca-Cola, Sprite, Fanta).",
+                    price: "$2.500",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Refresco"
+                },
+                {
+                    name: "Jugo Natural",
+                    description: "Jugo de naranja, piña o maracuyá.",
+                    price: "$3.000",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Jugo"
+                },
+                {
+                    name: "Café Americano",
+                    description: "Café recién hecho.",
+                    price: "$2.800",
+                    image: "https://placehold.co/80x80/e0e0e0/333333?text=Café"
+                }
+            ]
+        };
+
+        const categoryButtons = document.querySelectorAll('.category-button');
+        const productList = document.getElementById('product-list');
+        const categoryTitle = document.getElementById('category-title');
+
+        // Función para renderizar los productos de una categoría
+        function renderProducts(category) {
+            productList.innerHTML = ''; // Limpiar la lista actual
+            categoryTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' '); // Actualizar título
+
+            const products = productsData[category];
+            if (products) {
+                products.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">${product.name}</h3>
+                            <p class="text-sm text-gray-600 mb-1">${product.description}</p>
+                            <p class="text-md font-bold text-gray-800">${product.price}</p>
+                        </div>
+                    `;
+                    productList.appendChild(productCard);
+                });
+            }
+        }
+
+        // Añadir event listeners a los botones de categoría
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remover la clase 'active' de todos los botones
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                // Añadir la clase 'active' al botón clickeado
+                button.classList.add('active');
+                // Renderizar los productos de la categoría seleccionada
+                renderProducts(button.dataset.category);
+            });
+        });
+
+        // Cargar la categoría "Entradas" por defecto al inicio
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts('entradas');
+        });
+    </script>
+</body>
+</html>
