@@ -95,6 +95,7 @@
             background-color: var(--color-button-inactive-bg-light);
             transition: all 0.2s ease-in-out;
             margin-right: 0.75rem; /* Space between buttons */
+            flex-shrink: 0; /* Ensure buttons don't shrink */
         }
         .category-button:last-child {
             margin-right: 0; /* Remove margin from last button */
@@ -102,6 +103,11 @@
         .category-button.active {
             background-color: var(--color-button-active-bg-light);
             color: var(--color-button-active-text-light);
+        }
+        /* Remove default outline and box-shadow on focus */
+        .category-button:focus {
+            outline: none;
+            box-shadow: none;
         }
         .product-list-container {
             flex-grow: 1; /* Allows it to take remaining space */
@@ -329,7 +335,6 @@
         const categoryButtons = document.querySelectorAll('.category-button');
         const productList = document.getElementById('product-list');
         const categoryTitle = document.getElementById('category-title');
-        // Removed darkModeToggle as the button is removed from HTML
         const body = document.body;
 
         // Function to render products for a category
@@ -367,15 +372,10 @@
             });
         });
 
-        // Removed toggleDarkMode function as the button is removed from HTML
-        // Removed event listener for dark mode toggle
-
         // Load default category on initial load
         document.addEventListener('DOMContentLoaded', () => {
             // Load "Entradas" category by default
             renderProducts('entradas');
-
-            // Removed dark mode preference loading as the feature is removed
         });
     </script>
 </body>
