@@ -78,6 +78,7 @@
             z-index: 10; /* Ensure it's above products */
             padding: 1rem;
             display: flex;
+            align-items: center; /* Centra verticalmente los elementos flex */
             overflow-x: auto;
             white-space: nowrap;
             -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
@@ -96,6 +97,11 @@
             transition: all 0.2s ease-in-out;
             margin-right: 0.75rem; /* Space between buttons */
             flex-shrink: 0; /* Ensure buttons don't shrink */
+            /* Added for vertical centering */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px; /* Explicit height for consistent sizing */
         }
         .category-button:last-child {
             margin-right: 0; /* Remove margin from last button */
